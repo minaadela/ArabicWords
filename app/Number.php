@@ -17,6 +17,11 @@ class Number
      */
     private $stack = [];
 
+    /**
+     * @var bool
+     */
+    private $isNegative = false;
+
     const AND = 'و';
 
     /**
@@ -59,6 +64,11 @@ class Number
             return $this->handleZero($number);
         }
 
+        //handle negative number
+        if ($number < 0) {
+            $number = $this->handleNegativeNumber($number);
+        }
+
         //Split the number to three digits
         $numbers = $this->splitNumberToThreeDigits($number);
         // Reverse numbers array with the same keys to differentiate
@@ -94,7 +104,24 @@ class Number
             $this->setStack($text);
         }
 
-        return implode(' '.self:: AND.' ', $this->stack);
+        return $this->output();
+    }
+
+    /**
+     * Return output text
+     *
+     * @return string
+     */
+    private function output()
+    {
+        $output = '';
+        if ($this->isNegative) {
+            $output = $this->data['operators']['negative'].' ';
+        }
+
+        $output .= implode(' '.self:: AND.' ', $this->stack);
+
+        return $output;
     }
 
     /**
@@ -112,6 +139,19 @@ class Number
     }
 
     /**
+     * Convert the minus number into a positive number.
+     *
+     * @param $number
+     * @return int
+     */
+    private function handleNegativeNumber($number)
+    {
+        $this->setIsNegative(true);
+
+        return abs($number);
+    }
+
+    /**
      * Set stack
      *
      * @param $value
@@ -119,6 +159,11 @@ class Number
     private function setStack($value)
     {
         array_push($this->stack, $value);
+    }
+
+    private function setIsNegative($value)
+    {
+        $this->isNegative = $value;
     }
 
     /**
