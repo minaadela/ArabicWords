@@ -8,7 +8,7 @@ class NumberTest extends \PHPUnit\Framework\TestCase
 {
     public function testFormat()
     {
-        foreach (range(0, 10000) as $loop) {
+        for ($i = 0; $i < 1000; $i++) {
             $randomNumber = rand();
             $number = new Number();
 
