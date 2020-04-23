@@ -14,7 +14,6 @@ class NumberTest extends \PHPUnit\Framework\TestCase
 
             $numberFormat = new \NumberFormatter("ar", \NumberFormatter::SPELLOUT);
 
-            //$this->assertSame('واحد', $number->format(1));
             $this->assertSame($numberFormat->format($randomNumber), $number->format($randomNumber));
         }
     }
