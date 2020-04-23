@@ -32,6 +32,7 @@ class Number
      *
      * @param int $number
      * @return string
+     * @throws \Exception
      */
     public function format(int $number)
     {
@@ -47,10 +48,17 @@ class Number
      *
      * @param int $number
      * @return string
+     * @throws \Exception
      */
     private function handleFormat(int $number)
     {
         $this->checkNumberLength($number);
+
+        //Handle zero
+        if ($number === 0) {
+            return $this->handleZero($number);
+        }
+
         //Split the number to three digits
         $numbers = $this->splitNumberToThreeDigits($number);
         // Reverse numbers array with the same keys to differentiate
@@ -90,24 +98,17 @@ class Number
     }
 
     /**
-     * handle LargeNumbers
+     * handle single zero.
      *
      * @param $number
-     * @param $index
      * @return string
      */
-    private function handleLargeNumbers($number, $index)
+    private function handleZero($number)
     {
-        $text = '';
-        if ($number > 10) {
-            $text = $text.' '.$this->data['largeNumbers'][$index][1];
-        } elseif ($number > 2) {
-            $text = $text.' '.$this->data['largeNumbers'][$index][3];
-        } else {
-            $text = $this->data['largeNumbers'][$index][$number];
-        }
+        $text = $this->data['default'][$number];
+        $this->setStack($text);
 
-        return $text;
+        return implode(' '.self:: AND.' ', $this->stack);
     }
 
     /**
