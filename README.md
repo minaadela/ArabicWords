@@ -1,6 +1,6 @@
 ## Convert number to arabic words.
 
-##Usage
+## Usage
 Create a new instance from Number Class and call the format function.
 ``$number = new Number(); 
   echo $number->format($number)``
